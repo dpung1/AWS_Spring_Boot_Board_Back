@@ -23,7 +23,7 @@ public class TimeAop {
         stopWatch.start();
         Object target = proceedingJoinPoint.proceed();
         stopWatch.stop();
-        System.out.println(stopWatch.getTotalTimeSeconds() + "초");
+//        System.out.println(stopWatch.getTotalTimeSeconds() + "초");
         return target;
     }
 }

@@ -1,8 +1,10 @@
 package com.korit.board.dto;
 
+import com.korit.board.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -24,4 +26,13 @@ public class SignupReqDto {
 
     @NotBlank
     String nickname;
+
+    public User toUserEntity(BCryptPasswordEncoder passwordEncoder) {
+        return User.builder()
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .name(name)
+                .nickname(nickname)
+                .build();
+    }
 }

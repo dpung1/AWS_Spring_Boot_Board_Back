@@ -51,13 +51,13 @@ public class ValidAop {
             throw new ValidException(errorMap);
         }
 
-        System.out.println("전처리");
+//        System.out.println("전처리");
 
         // .proceed() 메소드가 호출 되기 전이 전처리
         Object target = proceedingJoinPoint.proceed(); // 메소드의 body
         // .proceed() 메소드가 리턴된 후가 후처리
 
-        System.out.println("후처리");
+//        System.out.println("후처리");
 
         return target;
     }

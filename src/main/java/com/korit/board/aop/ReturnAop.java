@@ -30,15 +30,15 @@ public class ReturnAop {
         String [] argNames = codeSignature.getParameterNames();
         Object[] args = proceedingJoinPoint.getArgs();
 
-        System.out.println("=============================================");
-        System.out.println("클래스명: " + className +  ", 메소드명 : " + methodName);
+//        System.out.println("=============================================");
+//        System.out.println("클래스명: " + className +  ", 메소드명 : " + methodName);
 
-        for(int i = 0; i < argNames.length; i++) {
-            System.out.println(argNames[i] + ": " + args[i]);
-        }
+//        for(int i = 0; i < argNames.length; i++) {
+//            System.out.println(argNames[i] + ": " + args[i]);
+//        }
 
-        System.out.println("리턴 : " + target);
-        System.out.println("=============================================");
+//        System.out.println("리턴 : " + target);
+//        System.out.println("=============================================");
 
         return target;
     }
