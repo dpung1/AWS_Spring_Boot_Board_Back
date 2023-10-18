@@ -1,6 +1,6 @@
 package com.korit.board.controller;
 
-import com.korit.board.Security.PrincipalUser;
+import com.korit.board.security.PrincipalUser;
 import com.korit.board.dto.PrincipalRespDto;
 import com.korit.board.entity.User;
 import lombok.RequiredArgsConstructor;

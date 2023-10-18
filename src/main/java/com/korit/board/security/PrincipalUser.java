@@ -1,4 +1,4 @@
-package com.korit.board.Security;
+package com.korit.board.security;
 
 import com.korit.board.entity.User;
 import lombok.Getter;

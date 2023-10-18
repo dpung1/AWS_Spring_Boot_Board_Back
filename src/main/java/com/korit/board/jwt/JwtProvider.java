@@ -1,6 +1,6 @@
 package com.korit.board.jwt;
 
-import com.korit.board.Security.PrincipalUser;
+import com.korit.board.security.PrincipalUser;
 import com.korit.board.entity.User;
 import com.korit.board.repository.UserMapper;
 import io.jsonwebtoken.Claims;

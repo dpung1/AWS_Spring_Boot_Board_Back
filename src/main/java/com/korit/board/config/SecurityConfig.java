@@ -1,7 +1,7 @@
 package com.korit.board.config;
 
 import com.korit.board.Filter.JwtAuthenticationFilter;
-import com.korit.board.Security.PrincipalEntryPoint;
+import com.korit.board.security.PrincipalEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
