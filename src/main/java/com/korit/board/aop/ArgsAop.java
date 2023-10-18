@@ -24,14 +24,14 @@ public class ArgsAop {
         String className = codeSignature.getDeclaringTypeName();
         String methodName = codeSignature.getName();
 
-//        System.out.println("=============================================");
-//        System.out.println("클래스명: " + className +  ", 메소드명 : " + methodName);
-//
-//        for(Object arg :proceedingJoinPoint.getArgs()) {
-//            System.out.println(arg);
-//        }
-//
-//        System.out.println("=============================================");
+        System.out.println("=============================================");
+        System.out.println("클래스명: " + className +  ", 메소드명 : " + methodName);
+
+        for(Object arg :proceedingJoinPoint.getArgs()) {
+            System.out.println(arg);
+        }
+
+        System.out.println("=============================================");
 
         return proceedingJoinPoint.proceed();
     }
