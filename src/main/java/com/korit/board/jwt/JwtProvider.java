@@ -33,7 +33,6 @@ public class JwtProvider {
 
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
-        PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 
         Date date = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
 
@@ -41,7 +40,6 @@ public class JwtProvider {
                 .setSubject("accessToken")
                 .setExpiration(date)
                 .claim("email", email)
-                .claim("disable", principalUser.isEnabled())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -83,4 +81,14 @@ public class JwtProvider {
         return new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
     }
 
+    public String generateAuthMailToken(String email) {
+        Date date = new Date(new Date().getTime() + (1000 * 60 * 5));
+
+        return Jwts.builder()
+                .setSubject("AuthenticationEmailToken")
+                .setExpiration(date)
+                .claim("email", email)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
 }

@@ -61,6 +61,7 @@ public class AuthService {
     }
 
     public String signin(SigninReqDto signinReqDto) {
+        // 이메일과 패스워드를 가져와 authenticationToken 객체 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(signinReqDto.getEmail(),signinReqDto.getPassword());
 

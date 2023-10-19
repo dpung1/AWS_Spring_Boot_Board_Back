@@ -21,11 +21,11 @@ public class PrincipalProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
-        String password = (String)authentication.getCredentials();
+        String password = (String) authentication.getCredentials();
 
         UserDetails principalUser = principalUserDetailService.loadUserByUsername(email);
 
-        // 앞에가 암호화 X , 뒤에가 암호와 O
+        // 앞에가 암호화 X , 뒤에가 암호와 O (matches = 서로 비교)
         if(!passwordEncoder.matches(password, principalUser.getPassword())) {
             throw new BadCredentialsException("BadCredentials");
         }

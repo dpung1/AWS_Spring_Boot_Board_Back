@@ -50,4 +50,12 @@
             email = #{email}
     </select>
 
+    <update id="updateEnabledToEmail">
+        update user_tb
+        set
+            enabled = 1
+        where
+            email = #{email}
+    </update>
+
 </mapper>

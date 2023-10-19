@@ -12,6 +12,4 @@ public class ValidException extends RuntimeException{
         super("유효성 검사 오류");
         this.errorMap = errorMap;
     }
-
-
 }
