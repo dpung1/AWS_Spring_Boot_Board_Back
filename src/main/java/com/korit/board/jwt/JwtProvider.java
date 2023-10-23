@@ -46,6 +46,7 @@ public class JwtProvider {
 
     public Claims getClaims(String token) {
         Claims claims = null;
+
         try {
             claims = Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -66,12 +67,15 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String token) {
+
         Claims claims = getClaims(token);
+
         if(claims == null) {
             return null;
         }
 
         User user = userMapper.findUserByEmail(claims.get("email").toString());
+
         if(user == null) {
             return null;
         }

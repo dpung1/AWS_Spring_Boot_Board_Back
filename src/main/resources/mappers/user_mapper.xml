@@ -12,11 +12,30 @@
         <result property="nickname" column="nickname"/>
         <result property="enabled" column="enabled"/>
         <result property="profileUrl" column="profile_url"/>
+        <result property="oauth2Id" column="oauth2_id"/>
+        <result property="provider" column="provider"/>
     </resultMap>
 
     <insert id="saveUser" parameterType="com.korit.board.entity.User">
-        insert into user_tb(user_id, email, password, name, nickname, enabled)
-        values (0, #{email}, #{password}, #{name}, #{nickname}, 0)
+        insert into user_tb
+        values (
+                0,
+                #{email},
+                #{password},
+                #{name},
+                #{nickname},
+                0,
+                <choose>
+                    <when test='profileUrl==null or profileUrl.equals("")'>
+                        default,
+                    </when>
+                    <otherwise>
+                        #{profileUrl},
+                    </otherwise>
+                </choose>
+                #{oauth2Id},
+                #{provider}
+                )
     </insert>
 
     <select id="checkDuplicate" parameterType="com.korit.board.entity.User" resultType="integer">
@@ -45,11 +64,30 @@
             name,
             nickname,
             enabled,
-            profile_url
+            profile_url,
+            oauth2_id,
+            provider
         from
             user_tb
         where
             email = #{email}
+    </select>
+
+    <select id="findUserByOauth2Id" resultType="com.korit.board.entity.User">
+        select
+            user_id,
+            email,
+            password,
+            name,
+            nickname,
+            enabled,
+            profile_url,
+            oauth2_id,
+            provider
+        from
+            user_tb
+        where
+            oauth2_id = #{oauth2Id}
     </select>
 
     <update id="updateEnabledToEmail">
