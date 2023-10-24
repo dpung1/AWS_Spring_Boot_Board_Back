@@ -1,5 +1,6 @@
 package com.korit.board.service;
 
+import com.korit.board.dto.MergeOauth2ReqDto;
 import com.korit.board.security.PrincipalProvider;
 import com.korit.board.dto.SigninReqDto;
 import com.korit.board.dto.SignupReqDto;
@@ -10,6 +11,7 @@ import com.korit.board.repository.UserMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -77,4 +79,16 @@ public class AuthService {
         }
         return Boolean.parseBoolean(claims.get("enabled").toString());
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean mergeOauth2(MergeOauth2ReqDto mergeOauth2ReqDto) {
+        User user = userMapper.findUserByEmail(mergeOauth2ReqDto.getEmail());
+
+        if(!passwordEncoder.matches(mergeOauth2ReqDto.getPassword(), user.getPassword())) {
+            throw new BadCredentialsException("BadCredentials");
+        }
+
+        return userMapper.updateOauth2IdAndProvider(mergeOauth2ReqDto.toUserEntity()) > 0;
+    }
+
 }

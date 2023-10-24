@@ -34,8 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/auth/**")
+                .antMatchers("/auth/**", "/board/**")
                 .permitAll() // 위에 있는 경로 접속시 길을 막지 않음
+                .antMatchers("/board/content")
+                .authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
