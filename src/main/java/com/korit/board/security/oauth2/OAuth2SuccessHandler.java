@@ -41,6 +41,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     "&name= " + URLEncoder.encode(name, "utf-8")+
                     "&profileImg=" + profileImg +
                     "&provider= " + provider);
+
+            return;
         }
         PrincipalUser principalUser = new PrincipalUser(user);
 
