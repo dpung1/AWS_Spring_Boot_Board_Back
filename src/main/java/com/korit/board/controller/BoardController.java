@@ -32,9 +32,8 @@ public class BoardController {
         return ResponseEntity.ok(boardService.writeBoardContent(writeBoardReqDto));
     }
 
-    @ArgsAop
     @GetMapping("/boards/{categoryName}/{page}")
     public ResponseEntity<?> getBoardList(@PathVariable String categoryName, @PathVariable int page, SearchBoardListReqDto searchBoardListReqDto) {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(boardService.getBoardList(categoryName, page, searchBoardListReqDto));
     }
 }
