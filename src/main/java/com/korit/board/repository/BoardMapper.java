@@ -15,6 +15,10 @@ public interface BoardMapper {
     // Board의 리스트를 가져오는 메소드 (Service에서 Map)
     public List<Board> getBoardList(Map<String, Object> paramsMap);
     public int getBoardCount(Map<String, Object> paramsMap);
+    public Board getBoardByBoardId(int boardId);
+    public int getLikeState(Map<String, Object> paramsMap);
+    public int insertLike(Map<String, Object> paramsMap);
+    public int deleteLike(Map<String, Object> paramsMap);
 
 
 }
