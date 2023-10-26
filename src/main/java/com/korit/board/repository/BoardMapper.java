@@ -12,8 +12,9 @@ public interface BoardMapper {
     public List<BoardCategory> getBoardCategories();
     public int saveCategory(BoardCategory boardCategory);
     public int saveBoard(Board board);
-
     // Board의 리스트를 가져오는 메소드 (Service에서 Map)
     public List<Board> getBoardList(Map<String, Object> paramsMap);
+    public int getBoardCount(Map<String, Object> paramsMap);
+
 
 }

@@ -62,11 +62,20 @@ public class BoardService {
         paramsMap.put("optionName", searchBoardListReqDto.getOptionName());
         paramsMap.put("searchValue", searchBoardListReqDto.getSearchValue());
 
-        // DB에 보내주고 요게 리스트로 날라옴
         List<BoardListRespDto> boardListRespDtos = new ArrayList<>();
         boardMapper.getBoardList(paramsMap).forEach(board -> {
             boardListRespDtos.add(board.toBoardListDto());
         });
         return boardListRespDtos;
+    }
+
+    public int getBoardCount(String categoryName, SearchBoardListReqDto searchBoardListReqDto) {
+        Map<String, Object> paramsMap = new HashMap<>();
+
+        paramsMap.put("categoryName", categoryName);
+        paramsMap.put("optionName", searchBoardListReqDto.getOptionName());
+        paramsMap.put("searchValue", searchBoardListReqDto.getSearchValue());
+
+        return boardMapper.getBoardCount(paramsMap);
     }
 }

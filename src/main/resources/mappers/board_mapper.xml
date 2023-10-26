@@ -38,7 +38,6 @@
             bct.board_category_name
     </select>
 
-
     <select id="getBoardList" resultMap="boardMap" parameterType="hashmap">
         SELECT
             bt.board_id,
@@ -50,7 +49,7 @@
             blt.board_like_count
         FROM
             board_tb bt
-        left outer join user_tb  ut on(ut.email = bt.email)
+        left outer join user_tb ut on(ut.email = bt.email)
         left outer join (select
                             board_id,
                             count(*) as board_hits_count
@@ -98,7 +97,41 @@
         limit #{index}, 10
     </select>
 
-
+    <select id="getBoardCount" parameterType="hashmap" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+            board_tb bt
+            left outer join user_tb ut on(ut.email = bt.email)
+        where
+            <!-- 무조건 실행 -->
+            1 = 1
+            <!-- if = 조건 하나 , choose = else if -->
+            <if test="!categoryName.equals('all')">
+                and bt.board_category_id = (
+                select
+                board_category_id
+                from
+                board_category_tb
+                where
+                board_category_name = #{categoryName}
+                )
+            </if>
+            <choose>
+                <when test="optionName.equals('제목')">
+                    and bt.board_title like concat("%", #{searchValue}, "%")
+                </when>
+                <when test="optionName.equals('작성자')">
+                    and ut.nickname like concat("%", #{searchValue}, "%")
+                </when>
+                <otherwise>
+                    and (
+                    bt.board_title like concat("%", #{searchValue}, "%")
+                    or ut.nickname like concat("%", #{searchValue}, "%")
+                    )
+                </otherwise>
+            </choose>
+    </select>
 
     <insert id="saveCategory" parameterType="com.korit.board.entity.BoardCategory" useGeneratedKeys="true" keyProperty="boardCategoryId">
         insert into board_category_tb
