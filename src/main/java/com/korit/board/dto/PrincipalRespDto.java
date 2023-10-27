@@ -15,4 +15,5 @@ public class PrincipalRespDto {
     private String profileUrl;
     private String oauth2Id;
     private String provider;
+    private int userPoint;
 }

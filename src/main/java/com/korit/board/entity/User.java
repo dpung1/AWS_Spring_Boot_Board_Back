@@ -21,6 +21,7 @@ public class User {
     private String profileUrl;
     private String oauth2Id;
     private String provider;
+    private int userPoint;
 
     public PrincipalRespDto toPrincipalDto() {
         return PrincipalRespDto.builder()
@@ -32,6 +33,7 @@ public class User {
                                 .profileUrl(profileUrl)
                                 .oauth2Id(oauth2Id)
                                 .provider(provider)
+                                .userPoint(userPoint)
                                 .build();
     }
 
