@@ -3,6 +3,7 @@ package com.korit.board.service;
 import com.korit.board.dto.*;
 import com.korit.board.entity.Board;
 import com.korit.board.entity.BoardCategory;
+import com.korit.board.entity.User;
 import com.korit.board.repository.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,25 +29,6 @@ public class BoardService {
 
         return boardCategoryRespDtos;
     }
-
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean writeBoardContent(WriteBoardReqDto writeBoardReqDto) {
-
-        BoardCategory boardCategory = null;
-
-        if(writeBoardReqDto.getCategoryId() == 0) {
-            boardCategory = BoardCategory.builder()
-                    .boardCategoryName(writeBoardReqDto.getCategoryName())
-                    .build();
-            boardMapper.saveCategory(boardCategory);
-            writeBoardReqDto.setCategoryId(boardCategory.getBoardCategoryId());
-        }
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        Board board = writeBoardReqDto.toBoardEntity(email);
-        return boardMapper.saveBoard(board) > 0;
-    }
-
 
     public List<BoardListRespDto> getBoardList(String categoryName, int page, SearchBoardListReqDto searchBoardListReqDto) {
         // 리스트가 1~10이면 0, 11~20이면 1 (SQL 쿼리문 limit 사용에 필요한 index)
@@ -76,9 +58,43 @@ public class BoardService {
         return boardMapper.getBoardCount(paramsMap);
     }
 
+// 게시판
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean writeBoardContent(WriteBoardReqDto writeBoardReqDto) {
+
+        BoardCategory boardCategory = null;
+
+        if(writeBoardReqDto.getCategoryId() == 0) {
+            boardCategory = BoardCategory.builder()
+                    .boardCategoryName(writeBoardReqDto.getCategoryName())
+                    .build();
+            boardMapper.saveCategory(boardCategory);
+            writeBoardReqDto.setCategoryId(boardCategory.getBoardCategoryId());
+        }
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Board board = writeBoardReqDto.toBoardEntity(email);
+        return boardMapper.saveBoard(board) > 0;
+    }
+
     public GetBoardRespDto getBoard(int boardId) {
         return boardMapper.getBoardByBoardId(boardId).toBoardDto();
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean editBoard(UpdateBoardReqDto updateBoardReqDto) {
+        return boardMapper.updateBoard(updateBoardReqDto.updateBoard()) > 0;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean removeBoard(int boardId) {
+        return boardMapper.removeBoard(boardId) > 0;
+    }
+
+
+
+// 좋아요
 
     public Boolean getLikeState(int boardId) {
         Map<String, Object> paramsMap = new HashMap<>();

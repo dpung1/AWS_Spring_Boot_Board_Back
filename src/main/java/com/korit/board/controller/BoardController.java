@@ -4,10 +4,9 @@ package com.korit.board.controller;
 import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.TimeAop;
 import com.korit.board.aop.annotation.ValidAop;
-import com.korit.board.dto.RegisterBoardReqDto;
-import com.korit.board.dto.SearchBoardListReqDto;
-import com.korit.board.dto.WriteBoardReqDto;
+import com.korit.board.dto.*;
 import com.korit.board.service.BoardService;
+import com.korit.board.service.PrincipalUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,6 +19,7 @@ import javax.validation.Valid;
 public class BoardController {
 
     private final BoardService boardService;
+    private final PrincipalUserDetailService principalUserDetailService;
 
     @GetMapping("/board/categories")
     public ResponseEntity<?> getCategories() {
@@ -47,6 +47,17 @@ public class BoardController {
         return ResponseEntity.ok(boardService.getBoard(boardId));
     }
 
+    @ArgsAop
+    @PutMapping("/board/{boardId}")
+    public ResponseEntity<?> editBoard(@RequestBody UpdateBoardReqDto updateBoardReq) {
+        return ResponseEntity.ok(boardService.editBoard(updateBoardReq));
+    }
+
+    @DeleteMapping("/board/{boardId}")
+    public ResponseEntity<?> removeBoard(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.removeBoard(boardId));
+    }
+
     @GetMapping("/board/like/{boardId}")
     public ResponseEntity<?> getLikeState(@PathVariable int boardId) {
         return ResponseEntity.ok(boardService.getLikeState(boardId));
@@ -60,5 +71,13 @@ public class BoardController {
     @DeleteMapping("/board/like/{boardId}")
     public ResponseEntity<?> cancelLike(@PathVariable int boardId) {
         return ResponseEntity.ok(boardService.cancelLike(boardId));
+    }
+
+    @ArgsAop
+    @PostMapping("/board/write/point")
+    public ResponseEntity<?> pointDisCount(@RequestBody PointDisCountReqDto pointDisCountReqDto) {
+        System.out.println(pointDisCountReqDto);
+        System.out.println(pointDisCountReqDto.toUserPointEntity());
+        return ResponseEntity.ok(principalUserDetailService.pointDisCount(pointDisCountReqDto));
     }
 }

@@ -18,7 +18,10 @@ import java.time.format.FormatStyle;
 public class Board {
     private int boardId;
     private String boardTitle;
+
     private int boardCategoryId;
+    private String boardCategoryName;
+
     private String boardContent;
     private String email;
 
@@ -47,6 +50,7 @@ public class Board {
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
                 .boardCategoryId(boardCategoryId)
+                .boardCategoryName(boardCategoryName)
                 .email(email)
                 .nickname(nickname)
                 // LONG = 일까지 , FULL = 요일

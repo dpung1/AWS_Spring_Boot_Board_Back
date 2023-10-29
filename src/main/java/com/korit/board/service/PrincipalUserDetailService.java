@@ -1,5 +1,6 @@
 package com.korit.board.service;
 
+import com.korit.board.dto.PointDisCountReqDto;
 import com.korit.board.security.PrincipalUser;
 import com.korit.board.entity.User;
 import com.korit.board.repository.UserMapper;
@@ -47,5 +48,9 @@ public class PrincipalUserDetailService implements UserDetailsService, OAuth2Use
         response.put("provider", provider);
 
         return new DefaultOAuth2User(new ArrayList<>(), response, "id");
+    }
+
+    public Boolean pointDisCount(PointDisCountReqDto pointDisCountReqDto) {
+        return userMapper.pointDisCount(pointDisCountReqDto.toUserPointEntity()) > 0;
     }
 }
