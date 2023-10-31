@@ -1,18 +1,16 @@
 spring:
+  profiles.include:
+    - secret
   security:
     oauth2:
       client:
         registration:
             kakao:
-              clientId: e5ff18dd49e25de8d46e9e1b1e3308a5
-#              clientSecret: 1e8a42b5e80e67c9271e6122f9a69c57
               redirectUri: http://localhost:8080/login/oauth2/code/kakao
               authorizationGrantType: authorization_code
               clientAuthenticationMethod: POST
               clientName: Kakao #첫글자 대문자
             naver:
-              clientId: n_g5NESdqQGDHV3rrvyG
-              clientSecret: cLLMO0Lbcg
               redirectUri: http://localhost:8080/login/oauth2/code/naver
               authorizationGrantType: authorization_code
               clientAuthenticationMethod: POST
@@ -31,27 +29,17 @@ spring:
             userInfoUri: https://openapi.naver.com/v1/nid/me #사용자정보
             userNameAttribute: response # 아이디로 식별
 
-
-
-
   mail:
     host: smtp.gmail.com
     port: 587
-    username: pung.971212
-    password: uaqe wbev iljw gxjx
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://db1.c0kt3mulsjo8.ap-northeast-2.rds.amazonaws.com:3306/board
-    username: admin
-    password: 1q2w3e4r
 
 mybatis:
   mapper-locations:
     - /mappers/*.xml
 
-jwt:
-  secret: mtsxGgbvzr62ATIYKbO/kok57jiG+6H7BU83CjkWL4AAVTF7OqvhMMH3UODsXjE7H2+nJxY2xcF0FlKNrOPKxA==
